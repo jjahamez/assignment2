@@ -10,5 +10,9 @@ h1 {
   font-family: Calibri;
   background-color: yellow;
   text-align: center;
-  
+
+}
+
+.form-container {
+  background-color: #c8c3ad89;
 }

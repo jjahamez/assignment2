@@ -6,13 +6,15 @@
   <link rel="stylesheet" href="src/style.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>assignment2</title>
-  
+
 </head>
 
 <body>
   <p> Cubic Formula Solver </p>
 
   <h1> Solve the roots of any Cubic Formula by entering the 4 values! (ax^3 + bx^2 + cx + d)</h1>
+
+  <div class="form-container"> 
   <form id="cubic-form">
     <label for="a"> Enter A value: </label> <br>
     <input type="text" id="a" name="a"> <br>
@@ -24,9 +26,10 @@
     <input type="text" id="d" name="d"> <br> <br>
     <input type="submit" value="Submit"> <br> <br>
     <label for="result">Result:</label>
-    <input type="text" id="result" name="result" />
+    <input type="text" id="result" name="result" readonly />
 
   </form>
+  </div>
 
   <script src="src/main.ts"> </script>
 </body>

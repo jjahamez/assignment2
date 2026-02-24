@@ -11,7 +11,7 @@ const b: number = Number(formData.get("b"));
 const c: number = Number(formData.get("c"));
 const d: number = Number(formData.get("d"))
 
-const test = (a + b + c) * d ;
+const test = a + b + c + d ;
 (document.getElementById("result") as HTMLInputElement).value = test.toString();
 
 })

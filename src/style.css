@@ -1,18 +1,32 @@
-p {
-  font-size: 100px;
-  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-  background-color: aliceblue;
-  text-align: center;
-  padding: 100px;
-} 
+body {
+  background: linear-gradient(135deg, #dbeafe,  #f0f9ff); /* top left to bot right gradient */
+
 
 h1 {
-  font-family: Calibri;
-  background-color: yellow;
+  font-size: 100px;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
   text-align: center;
+  padding: 100px;
+  font-weight: normal; 
+} 
+
+p {
+  font-family: Calibri;
+  text-align: center;
+  font-size: 30px;
+  font-weight: bold; 
 
 }
 
 .form-container {
-  background-color: #c8c3ad89;
+  background: white;
+  border-radius: 20px; 
+  padding: 30px; 
+  box-shadow: 0px 10px 15px lightgrey; /* top, left-right, bottom */ 
+  width: 320px; 
+
+}
+
+
+
 }

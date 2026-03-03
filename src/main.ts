@@ -17,23 +17,25 @@ form?.addEventListener("submit", (event) => {
 
   const h = -b / (3 * a); /* to equate y and x, adjuster */
 
+  const u = Math.cbrt(-q / 2 + (Math.sqrt( Math.pow(q/2, 2) + Math.pow(p/3, 3))));
+  const v = Math.cbrt(-q / 2 - (Math.sqrt( Math.pow(q/2, 2) + Math.pow(p/3, 3))));
+
   if (discriminant < 0) { 
     const theta = Math.acos(((-q / (2 * Math.sqrt((-p/3)**3))))) / 3;
-    const k = 2 * Math.sqrt(-p/3); 
+    const k = 2 * Math.sqrt(-p/3);  
 
-    const y1 = k * Math.cos(theta);
-    const y2 = k * Math.cos(theta + 2 * Math.PI / 3); 
-    const y3 = k * Math.cos(theta + 4 * Math.PI / 3); 
-
-    const root1 = y1 + h;
-    const root2 = y2 + h;
-    const root3 = y3 + h; /* more efficient to just remove y? */
+    const root1 = k * Math.cos(theta); + h;
+    const root2 = k * Math.cos(theta + 2 * Math.PI / 3);  + h;
+    const root3 = k * Math.cos(theta + 4 * Math.PI / 3);  + h; 
     
     (document.getElementById("result") as HTMLInputElement).value = `x1=${root1.toFixed(4)}, x2=${root2.toFixed(4)}, x3=${root3.toFixed(4)}`; 
     /* trig method */ 
     
   } else if (discriminant > 0) {
-    (document.getElementById("result") as HTMLInputElement).value = "1 real root, 2 complex";
+    
+    const root1 = u + v - h; 
+
+    (document.getElementById("result") as HTMLInputElement).value = `x1=${root1.toFixed(4)}`;
   
   } else {  
     (document.getElementById("result") as HTMLInputElement).value = "Repeated roots (Triple or Double/Single";

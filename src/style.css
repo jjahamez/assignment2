@@ -19,12 +19,13 @@ p {
 }
 
 .form-container {
+  display: grid;
   background: white;
   border-radius: 20px;
   padding: 30px;
   box-shadow: 0px 10px 15px lightgrey;  /* top, left-right, bottom */
   width: 320px;
-  margin: auto;
+  margin: 50px;
 }
 
 #cubic-form {
@@ -50,9 +51,31 @@ input[type="submit"] {
   padding: 10px;
   border-radius: 10px;
   border: 2px solid black;
-
 } 
 
 input[type="submit"]:hover {
   background-color: lightblue;
 }
+
+
+.Results {
+  display: grid;
+  background: white;
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0px 10px 15px lightgrey;  /* top, left-right, bottom */
+  width: 320px;
+  margin: 50px;
+
+}
+
+.Results label {
+  text-align: left;
+  padding-right: 10px;
+}
+
+.Results input {
+  text-align: left;
+  padding-right: 10px;
+}
+

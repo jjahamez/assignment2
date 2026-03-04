@@ -3,7 +3,6 @@ const form = document.getElementById("cubic-form") as HTMLFormElement;
 form?.addEventListener("submit", (event) => {
   event.preventDefault();
 
-
   const formData = new FormData(form);
 
   const a: number = Number(formData.get("a"));
@@ -13,6 +12,7 @@ form?.addEventListener("submit", (event) => {
 
   if (a === 0) {
     (document.getElementById("result") as HTMLInputElement).value = "a value must be non-zero to be a cubic function";
+
   } else {
 
     const p = (3 * a * c - b * b) / (3 * a * a); /* depressed cubic, refer to mr q */
@@ -44,10 +44,11 @@ form?.addEventListener("submit", (event) => {
 
     } else if (discriminant === 0 && p == 0 && q == 0) {
 
-      const root1 = u + v + h;
+      const root1 = h;
 
       (document.getElementById("result") as HTMLInputElement).value = `x1=${root1.toFixed(4)}, x2=${root1.toFixed(4)}, x3=${root1.toFixed(4)} `;
-      /* cardano's method */ 
+      /* cardano's method */
+
     } else {
       const r = Math.cbrt(q / 2);
 
@@ -57,7 +58,5 @@ form?.addEventListener("submit", (event) => {
       (document.getElementById("result") as HTMLInputElement).value = `x1=${root1.toFixed(4)}, x2=${root1.toFixed(4)}, x3=${root2.toFixed(4)} `;
     }
   }
-
-
 
 })  

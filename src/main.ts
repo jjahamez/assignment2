@@ -10,6 +10,9 @@ form?.addEventListener("submit", (event) => {
   const c: number = Number(formData.get("c"));
   const d: number = Number(formData.get("d"));
 
+  (document.getElementById("equation") as HTMLInputElement).value = `${a}x³ + ${b}x² + ${c}x + ${d}`
+
+
   if (a === 0) {
 
   } else {
@@ -25,7 +28,7 @@ form?.addEventListener("submit", (event) => {
 
     const rootOne = document.getElementById("root-1") as HTMLInputElement;
     const rootTwo = document.getElementById("root-2") as HTMLInputElement;
-    const rootThree = document.getElementById("root-3") as HTMLInputElement; 
+    const rootThree = document.getElementById("root-3") as HTMLInputElement;
     (document.getElementById("p-value") as HTMLInputElement).value = p.toFixed(4);
     (document.getElementById("q-value") as HTMLInputElement).value = q.toFixed(4);
     (document.getElementById("discriminant") as HTMLInputElement).value = discriminant.toFixed(4);
@@ -71,8 +74,60 @@ form?.addEventListener("submit", (event) => {
       rootOne.value = root1.toFixed(4);
       rootTwo.value = root1.toFixed(4);
       rootThree.value = root2.toFixed(4);
+
+
     }
 
   }
+
+  const canvas = document.getElementById("graph") as HTMLCanvasElement;
+  const ctx = canvas.getContext("2d");
+
+  const width = canvas.width;
+  const height = canvas.height;
+  const scale = 20;
+
+  function graph() {
+    if (!ctx) return;
+
+    ctx.clearRect(0, 0, width, height);
+
+    ctx.strokeStyle = "Dark Grey"; 
+    ctx.lineWidth = 1; 
+
+    const centerY = (width / 2);
+    const centerX = (height / 2);
+
+    for (let x = centerX % scale; x < width; x += scale) {
+      ctx.beginPath(); 
+      ctx.moveTo(x, 0);
+      ctx.lineTo(x, height);
+      ctx.stroke(); 
+    }
+
+    for (let y = centerY % scale; y < width; y += scale) {
+      ctx.beginPath(); 
+      ctx.moveTo(0, y);
+      ctx.lineTo(width, y);
+      ctx.stroke(); 
+    }
+
+    /* grid */ 
+
+    ctx.strokeStyle = "Black"
+    ctx.lineWidth = 2; 
+
+  }
+
+  graph(); 
+
+
+
+
+
+
+
+
+
 
 })  

@@ -1,5 +1,74 @@
 const form = document.getElementById("cubic-form") as HTMLFormElement;
 
+const canvas = document.getElementById("graph") as HTMLCanvasElement;
+const ctx = canvas.getContext("2d");
+
+const width = canvas.width;
+const height = canvas.height;
+const scale = 20;
+
+function graph(a = 0, b = 0, c = 0, d = 0) {
+  if (!ctx) return;
+
+  ctx.clearRect(0, 0, width, height);
+
+  ctx.strokeStyle = "Dark Grey";
+  ctx.lineWidth = 1;
+
+  const centerX = (width / 2);
+  const centerY = (height / 2);
+
+  for (let x = centerX % scale; x < width; x += scale) {
+    ctx.beginPath();
+    ctx.moveTo(x, 0);
+    ctx.lineTo(x, height);
+    ctx.stroke();
+  }
+
+  for (let y = centerY % scale; y < height; y += scale) {
+    ctx.beginPath();
+    ctx.moveTo(0, y);
+    ctx.lineTo(width, y);
+    ctx.stroke();
+  }
+
+  /* grid */
+
+  ctx.strokeStyle = "Black"
+  ctx.lineWidth = 3;
+
+  ctx.beginPath();
+  ctx.moveTo(0, centerY)
+  ctx.lineTo(width, centerY)
+  ctx.stroke();
+
+  ctx.beginPath();
+  ctx.moveTo(centerX, 0)
+  ctx.lineTo(centerX, height)
+  ctx.stroke();
+  // axis //
+
+  if (a !== 0 || b !== 0 || c !== 0 || d !== 0) {
+    ctx.strokeStyle = "Red";
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+
+    for (let px = 0; px < width; px++) {
+      const x = (px - centerX) / scale;
+      const y = a * x ** 3 + b * x ** 2 + c * x + d;
+      const py = centerY - y * scale;
+
+      if (px === 0) ctx.moveTo(px, py);
+      else ctx.lineTo(px, py);
+    }
+
+    ctx.stroke();
+  }
+  // function // 
+}
+
+graph();
+
 form?.addEventListener("submit", (event) => {
   event.preventDefault();
 
@@ -9,6 +78,8 @@ form?.addEventListener("submit", (event) => {
   const b: number = Number(formData.get("b"));
   const c: number = Number(formData.get("c"));
   const d: number = Number(formData.get("d"));
+
+  graph(a, b, c, d);
 
   if (a === 0) {
 
@@ -25,7 +96,7 @@ form?.addEventListener("submit", (event) => {
 
     const rootOne = document.getElementById("root-1") as HTMLInputElement;
     const rootTwo = document.getElementById("root-2") as HTMLInputElement;
-    const rootThree = document.getElementById("root-3") as HTMLInputElement; 
+    const rootThree = document.getElementById("root-3") as HTMLInputElement;
     (document.getElementById("p-value") as HTMLInputElement).value = p.toFixed(4);
     (document.getElementById("q-value") as HTMLInputElement).value = q.toFixed(4);
     (document.getElementById("discriminant") as HTMLInputElement).value = discriminant.toFixed(4);

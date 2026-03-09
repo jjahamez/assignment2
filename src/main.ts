@@ -5,18 +5,19 @@ const ctx = canvas.getContext("2d");
 
 const width = canvas.width;
 const height = canvas.height;
-const scale = 20;
+const scale = 25;
 
 function graph(a = 0, b = 0, c = 0, d = 0) {
   if (!ctx) return;
 
-  ctx.clearRect(0, 0, width, height);
-
-  ctx.strokeStyle = "Dark Grey";
-  ctx.lineWidth = 1;
+  ctx.fillStyle = "white";
+  ctx.fillRect(0, 0, width, height);
 
   const centerX = (width / 2);
   const centerY = (height / 2);
+
+  ctx.strokeStyle = "DarkGrey";
+  ctx.lineWidth = 1;
 
   for (let x = centerX % scale; x < width; x += scale) {
     ctx.beginPath();
@@ -32,19 +33,19 @@ function graph(a = 0, b = 0, c = 0, d = 0) {
     ctx.stroke();
   }
 
-  /* grid */
+  // grid //
 
   ctx.strokeStyle = "Black"
   ctx.lineWidth = 3;
 
   ctx.beginPath();
-  ctx.moveTo(0, centerY)
-  ctx.lineTo(width, centerY)
+  ctx.moveTo(0, centerY);
+  ctx.lineTo(width, centerY);
   ctx.stroke();
 
   ctx.beginPath();
-  ctx.moveTo(centerX, 0)
-  ctx.lineTo(centerX, height)
+  ctx.moveTo(centerX, 0);
+  ctx.lineTo(centerX, height);
   ctx.stroke();
   // axis //
 
@@ -79,24 +80,37 @@ form?.addEventListener("submit", (event) => {
   const c: number = Number(formData.get("c"));
   const d: number = Number(formData.get("d"));
 
+  const equationDisplay = document.getElementById("equation") as HTMLParagraphElement;
+  const equation = `y = ${a}x³ ${b >= 0 ? "+" : "-"} ${Math.abs(b)}x² ${c >= 0 ? "+" : "-"} ${Math.abs(c)}x ${d >= 0 ? "+" : "-"} ${Math.abs(d)}`;
+  equationDisplay.textContent = equation;
+
   graph(a, b, c, d);
 
+  const p = (3 * a * c - b * b) / (3 * a * a); /* depressed cubic, refer to mr q */
+  const q = (27 * a * a * d - 9 * a * b * c + 2 * b * b * b) / (27 * a * a * a);
+  const discriminant = Math.pow(q / 2, 2) + Math.pow(p / 3, 3);
+
+  const h = -b / (3 * a); /* to equate y and x, adjuster */
+
+  const u = Math.cbrt(-q / 2 + (Math.sqrt(discriminant)));
+  const v = Math.cbrt(-q / 2 - (Math.sqrt(discriminant)));
+
+  const rootOne = document.getElementById("root-1") as HTMLInputElement;
+  const rootTwo = document.getElementById("root-2") as HTMLInputElement;
+  const rootThree = document.getElementById("root-3") as HTMLInputElement;
+  const message = document.getElementById("message") as HTMLParagraphElement;
+
   if (a === 0) {
+    message.textContent = "NOT a Cubic Function";
+    rootOne.value = "";
+    rootTwo.value = "";
+    rootThree.value = "";
+    (document.getElementById("p-value") as HTMLInputElement).value = "";
+    (document.getElementById("q-value") as HTMLInputElement).value = "";
+    (document.getElementById("discriminant") as HTMLInputElement).value = "";
 
   } else {
-
-    const p = (3 * a * c - b * b) / (3 * a * a); /* depressed cubic, refer to mr q */
-    const q = (27 * a * a * d - 9 * a * b * c + 2 * b * b * b) / (27 * a * a * a);
-    const discriminant = Math.pow(q / 2, 2) + Math.pow(p / 3, 3);
-
-    const h = -b / (3 * a); /* to equate y and x, adjuster */
-
-    const u = Math.cbrt(-q / 2 + (Math.sqrt(discriminant)));
-    const v = Math.cbrt(-q / 2 - (Math.sqrt(discriminant)));
-
-    const rootOne = document.getElementById("root-1") as HTMLInputElement;
-    const rootTwo = document.getElementById("root-2") as HTMLInputElement;
-    const rootThree = document.getElementById("root-3") as HTMLInputElement;
+    message.textContent = "";
     (document.getElementById("p-value") as HTMLInputElement).value = p.toFixed(4);
     (document.getElementById("q-value") as HTMLInputElement).value = q.toFixed(4);
     (document.getElementById("discriminant") as HTMLInputElement).value = discriminant.toFixed(4);

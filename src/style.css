@@ -7,7 +7,6 @@ h1 {
   font-size: 100px;
   font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
   text-align: center;
-  padding: 100px;
   font-weight: normal;
 }
 
@@ -79,5 +78,11 @@ input[type="submit"]:hover {
   padding-right: 10px;
 }
 
+.layout {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 60px;
+}
 
 

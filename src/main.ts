@@ -7,7 +7,7 @@ const width = canvas.width;
 const height = canvas.height;
 const scale = 25;
 
-function graph(a = 0, b = 0, c = 0, d = 0) {
+function graph(a = 0, b = 0, c = 0, d = 0, roots: number[] = []) {
   if (!ctx) return;
 
   ctx.fillStyle = "white";
@@ -64,8 +64,18 @@ function graph(a = 0, b = 0, c = 0, d = 0) {
     }
 
     ctx.stroke();
+    // function // 
   }
-  // function // 
+
+  ctx.fillStyle = "Blue";
+  roots.forEach(root => {
+    const px = centerX + root * scale;
+    const py = centerY;
+    ctx.beginPath();
+    ctx.arc(px, py, 5, 0, 2 * Math.PI)
+    ctx.fill();
+  });
+
 }
 
 graph();
@@ -84,11 +94,9 @@ form?.addEventListener("submit", (event) => {
   const equation = `y = ${a}x³ ${b >= 0 ? "+" : "-"} ${Math.abs(b)}x² ${c >= 0 ? "+" : "-"} ${Math.abs(c)}x ${d >= 0 ? "+" : "-"} ${Math.abs(d)}`;
   equationDisplay.textContent = equation;
 
-  graph(a, b, c, d);
-
   const p = (3 * a * c - b * b) / (3 * a * a); /* depressed cubic, refer to mr q */
   const q = (27 * a * a * d - 9 * a * b * c + 2 * b * b * b) / (27 * a * a * a);
-  const discriminant = Math.pow(q / 2, 2) + Math.pow(p / 3, 3);
+  const discriminant = (q / 2) * (q / 2) * + (p / 3) * (p / 3) * (p / 3); // Math.pow(q / 2, 2) + Math.pow(p / 3, 3); breaks in certain cases (1,-1,0,0) // 
 
   const h = -b / (3 * a); /* to equate y and x, adjuster */
 
@@ -158,6 +166,9 @@ form?.addEventListener("submit", (event) => {
       rootThree.value = root2.toFixed(4);
     }
 
+    graph(a, b, c, d, roots);
   }
+
+  
 
 })  

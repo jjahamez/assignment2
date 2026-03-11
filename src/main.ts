@@ -92,31 +92,36 @@ form?.addEventListener("submit", (event) => {
   const equation =
     (`${a === 1 ? "" : a === -1 ? "-" : a}x³ `) +
     (b !== 0 ? `${b > 0 ? "+" : "-"} ${Math.abs(b) === 1 ? "" : Math.abs(b)}x² ` : "") +
-    (c !== 0 ? `${c > 0 ? "+" : "-"} ${Math.abs(c) === 1 ? "" : Math.abs(c)}x ` : "") + 
+    (c !== 0 ? `${c > 0 ? "+" : "-"} ${Math.abs(c) === 1 ? "" : Math.abs(c)}x ` : "") +
     (d !== 0 ? `${d > 0 ? "+" : "-"} ${Math.abs(d)}` : "")
   equationDisplay.textContent = equation;
 
   const message = document.getElementById("message") as HTMLParagraphElement;
+  const p: number = (3 * a * c - b * b) / (3 * a * a); // depressed cubic, refer to mr q 
+  const q: number = (27 * a * a * d - 9 * a * b * c + 2 * b * b * b) / (27 * a * a * a);
+  const discriminant: number = (q / 2) * (q / 2) + (p / 3) * (p / 3) * (p / 3); // Math.pow(q / 2, 2) + Math.pow(p / 3, 3); breaks in certain cases (1,-1,0,0) 
+
+  const h: number = -b / (3 * a); // to equate y and x, adjuster 
+
+  const u: number = Math.cbrt(-q / 2 + (Math.sqrt(discriminant)));
+  const v: number = Math.cbrt(-q / 2 - (Math.sqrt(discriminant))); // for cardano's method 
+
+  const rootOne = document.getElementById("root-1") as HTMLInputElement;
+  const rootTwo = document.getElementById("root-2") as HTMLInputElement;
+  const rootThree = document.getElementById("root-3") as HTMLInputElement;
 
   const roots: number[] = []; // fit the roots into array 
 
   if (a === 0) {
     message.textContent = "*NOT a Cubic Function*";
+    rootOne.value = "";
+    rootTwo.value = "";
+    rootThree.value = "";
+    (document.getElementById("p-value") as HTMLInputElement).value = "";
+    (document.getElementById("q-value") as HTMLInputElement).value = "";
+    (document.getElementById("discriminant") as HTMLInputElement).value = "";
 
   } else {
-    const p: number = (3 * a * c - b * b) / (3 * a * a); // depressed cubic, refer to mr q 
-    const q: number = (27 * a * a * d - 9 * a * b * c + 2 * b * b * b) / (27 * a * a * a);
-    const discriminant: number = (q / 2) * (q / 2) + (p / 3) * (p / 3) * (p / 3); // Math.pow(q / 2, 2) + Math.pow(p / 3, 3); breaks in certain cases (1,-1,0,0) 
-
-    const h: number = -b / (3 * a); // to equate y and x, adjuster 
-
-    const u: number = Math.cbrt(-q / 2 + (Math.sqrt(discriminant)));
-    const v: number = Math.cbrt(-q / 2 - (Math.sqrt(discriminant))); // for cardano's method 
-
-    const rootOne = document.getElementById("root-1") as HTMLInputElement;
-    const rootTwo = document.getElementById("root-2") as HTMLInputElement;
-    const rootThree = document.getElementById("root-3") as HTMLInputElement;
-
     message.textContent = "";
     (document.getElementById("p-value") as HTMLInputElement).value = p.toFixed(5);
     (document.getElementById("q-value") as HTMLInputElement).value = q.toFixed(5);

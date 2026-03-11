@@ -130,9 +130,9 @@ form?.addEventListener("submit", (event) => {
       const root2: number = k * Math.cos(theta + 2 * Math.PI / 3) + h;
       const root3: number = k * Math.cos(theta + 4 * Math.PI / 3) + h;
 
-      rootOne.value = root1.toFixed(2);
-      rootTwo.value = root2.toFixed(2);
-      rootThree.value = root3.toFixed(2);
+      rootOne.value = `(${root1.toFixed(2)}, 0)`;
+      rootTwo.value = `(${root2.toFixed(2)}, 0)`;
+      rootThree.value = `(${root3.toFixed(2)}, 0)`;
 
       roots.push(root1, root2, root3);
 
@@ -142,7 +142,7 @@ form?.addEventListener("submit", (event) => {
 
       const root1: number = u + v + h;
 
-      rootOne.value = root1.toFixed(2);
+      rootOne.value = `(${root1.toFixed(2)}, 0)`;
       rootTwo.value = "Complex Root";
       rootThree.value = "Complex Root";
 
@@ -152,9 +152,9 @@ form?.addEventListener("submit", (event) => {
 
       const root1: number = h;
 
-      rootOne.value = root1.toFixed(2);
-      rootTwo.value = root1.toFixed(2);
-      rootThree.value = root1.toFixed(2);
+      rootOne.value = `(${root1.toFixed(2)}, 0)`;
+      rootTwo.value = `(${root1.toFixed(2)}, 0)`;
+      rootThree.value = `(${root1.toFixed(2)}, 0)`;
 
       roots.push(root1);
 
@@ -166,9 +166,9 @@ form?.addEventListener("submit", (event) => {
       const root1: number = r + h; // double root 
       const root2: number = -2 * r + h;
 
-      rootOne.value = root1.toFixed(2);
-      rootTwo.value = root1.toFixed(2);
-      rootThree.value = root2.toFixed(2);
+      rootOne.value = `(${root1.toFixed(2)}, 0)`;
+      rootTwo.value = `(${root1.toFixed(2)}, 0)`;
+      rootThree.value = `(${root2.toFixed(2)}, 0)`;
 
       roots.push(root1, root1, root2);
     }

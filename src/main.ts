@@ -1,32 +1,30 @@
 const form = document.getElementById("cubic-form") as HTMLFormElement;
 
 const canvas = document.getElementById("graph") as HTMLCanvasElement;
-const ctx = canvas.getContext("2d");
+const ctx = canvas.getContext("2d")!; // will never be null, if (!ctx) return; unnecessary 
 
-const width = canvas.width;
-const height = canvas.height;
-const scale = 25;
+const width: number = canvas.width;
+const height: number = canvas.height;
+const scale: number = 21;
 
 function graph(a: number, b: number, c: number, d: number, roots: number[] = []) {
-  if (!ctx) return;
-
   ctx.fillStyle = "white";
   ctx.fillRect(0, 0, width, height);
 
-  const centerX = width / 2;
-  const centerY = height / 2;
+  const centerX: number = width / 2;
+  const centerY: number = height / 2;
 
   ctx.strokeStyle = "DarkGrey";
   ctx.lineWidth = 1;
 
-  for (let x = centerX % scale; x < width; x += scale) {
+  for (let x: number = centerX % scale; x < width; x += scale) {
     ctx.beginPath();
     ctx.moveTo(x, 0);
     ctx.lineTo(x, height);
     ctx.stroke();
   }
 
-  for (let y = centerY % scale; y < height; y += scale) {
+  for (let y: number = centerY % scale; y < height; y += scale) {
     ctx.beginPath();
     ctx.moveTo(0, y);
     ctx.lineTo(width, y);
@@ -54,9 +52,9 @@ function graph(a: number, b: number, c: number, d: number, roots: number[] = [])
     ctx.beginPath();
 
     for (let px = 0; px < width; px++) {
-      const x = (px - centerX) / scale;
-      const y = a * x ** 3 + b * x ** 2 + c * x + d;
-      const py = centerY - y * scale;
+      const x: number = (px - centerX) / scale;
+      const y: number = a * x ** 3 + b * x ** 2 + c * x + d;
+      const py: number = centerY - y * scale;
 
       if (px === 0) ctx.moveTo(px, py);
       else ctx.lineTo(px, py);
@@ -68,10 +66,10 @@ function graph(a: number, b: number, c: number, d: number, roots: number[] = [])
 
   ctx.fillStyle = "Blue";
   roots.forEach(root => {
-    const px = centerX + root * scale;
-    const py = centerY;
+    const px: number = centerX + root * scale;
+    const py: number = centerY;
     ctx.beginPath();
-    ctx.arc(px, py, 5, 0, 2 * Math.PI)
+    ctx.arc(px, py, 5, 0, 2 * Math.PI);
     ctx.fill();
   });
   // zeroes
@@ -92,15 +90,15 @@ form?.addEventListener("submit", (event) => {
 
   const equationDisplay = document.getElementById("equation") as HTMLParagraphElement;
   const equation =
-    (a !== 0 ? `${a === 1 ? "" : a === -1 ? "-" : a}x³` : "") +
-    (b !== 0 ? `${a !== 0 && b > 0 ? " + " : a !== 0 && b < 0 ? " - " : b < 0 ? "-" : ""}${Math.abs(b) === 1 ? "x²" : Math.abs(b) + "x²"}` : "") +
-    (c !== 0 ? `${(a !== 0 || b !== 0) && c > 0 ? " + " : c < 0 && (a !== 0 || b !== 0) ? " - " : c < 0 ? "-" : ""}${Math.abs(c) === 1 ? "x" : Math.abs(c) + "x"}` : "") +
-    (d !== 0 ? `${(a !== 0 || b !== 0 || c !== 0) && d > 0 ? " + " : d < 0 && (a !== 0 || b !== 0 || c !== 0) ? " - " : d < 0 ? "-" : ""}${Math.abs(d)}` : "");
+    (`${a === 1 ? "" : a === -1 ? "-" : a}x³ `) +
+    (b !== 0 ? `${b > 0 ? "+" : "-"} ${Math.abs(b) === 1 ? "" : Math.abs(b)}x² ` : "") +
+    (c !== 0 ? `${c > 0 ? "+" : "-"} ${Math.abs(c) === 1 ? "" : Math.abs(c)}x ` : "") + 
+    (d !== 0 ? `${d > 0 ? "+" : "-"} ${Math.abs(d)}` : "")
   equationDisplay.textContent = equation;
 
   const message = document.getElementById("message") as HTMLParagraphElement;
 
-  const roots: number[] = []; // fit the roots into an array 
+  const roots: number[] = []; // fit the roots into array 
 
   if (a === 0) {
     message.textContent = "*NOT a Cubic Function*";
@@ -125,12 +123,12 @@ form?.addEventListener("submit", (event) => {
     (document.getElementById("discriminant") as HTMLInputElement).value = discriminant.toFixed(5);
 
     if (discriminant < 0) {
-      const theta: number = Math.acos(((-q / (2 * Math.sqrt((-p / 3) ** 3))))) / 3;
-      const k = 2 * Math.sqrt(-p / 3);
+      const theta: number = Math.acos((-q / (2 * Math.sqrt((-p / 3) ** 3)))) / 3;
+      const k: number = 2 * Math.sqrt(-p / 3);
 
-      const root1 = k * Math.cos(theta) + h;
-      const root2 = k * Math.cos(theta + 2 * Math.PI / 3) + h;
-      const root3 = k * Math.cos(theta + 4 * Math.PI / 3) + h;
+      const root1: number = k * Math.cos(theta) + h;
+      const root2: number = k * Math.cos(theta + 2 * Math.PI / 3) + h;
+      const root3: number = k * Math.cos(theta + 4 * Math.PI / 3) + h;
 
       rootOne.value = root1.toFixed(2);
       rootTwo.value = root2.toFixed(2);
@@ -142,7 +140,7 @@ form?.addEventListener("submit", (event) => {
 
     } else if (discriminant > 0) {
 
-      const root1 = u + v + h;
+      const root1: number = u + v + h;
 
       rootOne.value = root1.toFixed(2);
       rootTwo.value = "Complex Root";
@@ -152,7 +150,7 @@ form?.addEventListener("submit", (event) => {
 
     } else if (discriminant === 0 && p === 0 && q === 0) {
 
-      const root1 = h;
+      const root1: number = h;
 
       rootOne.value = root1.toFixed(2);
       rootTwo.value = root1.toFixed(2);
@@ -163,10 +161,10 @@ form?.addEventListener("submit", (event) => {
       // cardano's method 
 
     } else {
-      const r = Math.cbrt(q / 2);
+      const r: number = Math.cbrt(q / 2);
 
-      const root1 = r + h; // double root 
-      const root2 = -2 * r + h;
+      const root1: number = r + h; // double root 
+      const root2: number = -2 * r + h;
 
       rootOne.value = root1.toFixed(2);
       rootTwo.value = root1.toFixed(2);

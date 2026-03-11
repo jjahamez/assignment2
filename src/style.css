@@ -1,88 +1,149 @@
+/* -------------------- Body & Fonts -------------------- */
 body {
   background-color: #dbeafe;
-
+  font-family: Calibri, sans-serif;
+  text-align: center;
+  margin: 0;
+  padding: 0;
 }
 
+/* -------------------- Title & Instructions -------------------- */
 h1 {
-  font-size: 100px;
+  font-size: 80px;
   font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-  text-align: center;
   font-weight: normal;
+  margin-bottom: 10px;
 }
 
 p {
-  font-family: Calibri;
-  text-align: center;
-  font-size: 25px;
-  font-weight: bold;
+  font-size: 20px;
+  margin-bottom: 20px;
 }
 
+/* -------------------- Form Container -------------------- */
 .form-container {
-  display: grid;
   background: white;
   border-radius: 20px;
-  padding: 30px;
-  box-shadow: 0px 10px 15px lightgrey;  /* top, left-right, bottom */
-  width: 320px;
-  margin: 50px;
-}
-
-#cubic-form {
-  display: flex; /* refer to w3s, improves style */ 
+  padding: 20px 25px;
+  box-shadow: 0px 10px 15px lightgrey;
+  margin: 0 auto 25px auto;
+  display: flex;
   flex-direction: column;
+  align-items: center;
+  max-width: 950px; /* wide enough for ABCD + button */
+  width: 95%;
 }
 
-label {
+/* -------------------- ABCD Inputs + Button Row -------------------- */
+.abcd-inputs {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: nowrap; /* stay on one row */
+  margin-bottom: 15px;
+}
+
+.abcd-inputs label {
   font-weight: bold;
+  font-size: 16px;
 }
 
-input[type="text"] {
+.abcd-inputs input[type="text"] {
+  width: 80px;
+  min-width: 60px;
+  text-align: center;
   border-radius: 5px;
   border: 1.5px solid black;
+  padding: 6px;
+  font-size: 16px;
 }
 
-input[type="text"]:focus {
-  box-shadow: 0px 2px 2px lightgrey;
-}
-
-input[type="submit"] {
-  margin: 20px;
-  padding: 10px;
+/* Submit Button */
+.abcd-inputs input[type="submit"] {
+  padding: 12px 30px; /* bigger button */
+  font-size: 18px;
+  font-weight: bold;
   border-radius: 10px;
   border: 2px solid black;
-} 
+  cursor: pointer;
+}
 
-input[type="submit"]:hover {
+.abcd-inputs input[type="submit"]:hover {
   background-color: lightblue;
 }
 
+/* -------------------- Error Message -------------------- */
+#message {
+  color: red;
+  font-weight: bold;
+  font-size: 50px; /* bigger */
+  margin-top: 10px;
+  text-align: center;
+}
 
+/* -------------------- PQ Box + Graph Side by Side -------------------- */
+.results-graph-container {
+  display: flex;
+  justify-content: center;
+  align-items: center; /* vertically center PQ box with graph */
+  gap: 40px;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+}
+
+/* -------------------- Results Box -------------------- */
 .Results {
-  display: grid;
   background: white;
   border-radius: 20px;
-  padding: 30px;
-  box-shadow: 0px 10px 15px lightgrey;  /* top, left-right, bottom */
-  width: 320px;
-  margin: 50px;
-
+  padding: 20px;
+  box-shadow: 0px 10px 15px lightgrey;
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .Results label {
   text-align: left;
-  padding-right: 10px;
+  font-weight: bold;
+  font-size: 14px;
 }
 
 .Results input {
+  font-size: 14px;
   text-align: left;
-  padding-right: 10px;
+  width: 100%;
 }
 
-.layout {
+/* -------------------- Graph -------------------- */
+.graph-container {
   display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 60px;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
 }
 
+#equation {
+  font-size: 30px; /* bigger equation */
+  margin-bottom: 10px;
+  font-weight: bold;
+  min-height: 40px;  
+}
 
+/* -------------------- Responsive Fix -------------------- */
+@media (max-width: 850px) {
+  .abcd-inputs {
+    flex-wrap: wrap; /* allow wrapping on small screens */
+  }
+  
+  .results-graph-container {
+    flex-direction: column; /* stack PQ + graph on small screens */
+    align-items: center;
+  }
+  
+  .graph-container canvas {
+    width: 90%;
+    height: auto;
+  }
+}

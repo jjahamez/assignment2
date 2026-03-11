@@ -7,7 +7,7 @@ const width = canvas.width;
 const height = canvas.height;
 const scale = 25;
 
-function graph(a: 0, b: 0, c: 0, d: 0, roots: number[] = []) { 
+function graph(a: number, b: number, c: number, d: number, roots: number[] = []) {
   if (!ctx) return;
 
   ctx.fillStyle = "white";
@@ -34,7 +34,7 @@ function graph(a: 0, b: 0, c: 0, d: 0, roots: number[] = []) {
   }
   // grid 
 
-  ctx.strokeStyle = "Black"; 
+  ctx.strokeStyle = "Black";
   ctx.lineWidth = 3;
 
   ctx.beginPath();
@@ -78,7 +78,7 @@ function graph(a: 0, b: 0, c: 0, d: 0, roots: number[] = []) {
 
 }
 
-graph();
+graph(0, 0, 0, 0, []);
 
 form?.addEventListener("submit", (event) => {
   event.preventDefault();
@@ -91,51 +91,50 @@ form?.addEventListener("submit", (event) => {
   const d: number = Number(formData.get("d"));
 
   const equationDisplay = document.getElementById("equation") as HTMLParagraphElement;
-  const equation = `y = ${a}x³ ${b >= 0 ? "+" : "-"} ${Math.abs(b)}x² ${c >= 0 ? "+" : "-"} ${Math.abs(c)}x ${d >= 0 ? "+" : "-"} ${Math.abs(d)}`;
+  const equation =
+    (a !== 0 ? `${a === 1 ? "" : a === -1 ? "-" : a}x³` : "") +
+    (b !== 0 ? `${a !== 0 && b > 0 ? " + " : a !== 0 && b < 0 ? " - " : b < 0 ? "-" : ""}${Math.abs(b) === 1 ? "x²" : Math.abs(b) + "x²"}` : "") +
+    (c !== 0 ? `${(a !== 0 || b !== 0) && c > 0 ? " + " : c < 0 && (a !== 0 || b !== 0) ? " - " : c < 0 ? "-" : ""}${Math.abs(c) === 1 ? "x" : Math.abs(c) + "x"}` : "") +
+    (d !== 0 ? `${(a !== 0 || b !== 0 || c !== 0) && d > 0 ? " + " : d < 0 && (a !== 0 || b !== 0 || c !== 0) ? " - " : d < 0 ? "-" : ""}${Math.abs(d)}` : "");
   equationDisplay.textContent = equation;
 
-  const p = (3 * a * c - b * b) / (3 * a * a); // depressed cubic, refer to mr q 
-  const q = (27 * a * a * d - 9 * a * b * c + 2 * b * b * b) / (27 * a * a * a);
-  const discriminant = (q / 2) * (q / 2) + (p / 3) * (p / 3) * (p / 3); // Math.pow(q / 2, 2) + Math.pow(p / 3, 3); breaks in certain cases (1,-1,0,0) 
-
-  const h = -b / (3 * a); // to equate y and x, adjuster 
-
-  const u = Math.cbrt(-q / 2 + (Math.sqrt(discriminant)));
-  const v = Math.cbrt(-q / 2 - (Math.sqrt(discriminant))); // for cardano's method 
-
-  const rootOne = document.getElementById("root-1") as HTMLInputElement;
-  const rootTwo = document.getElementById("root-2") as HTMLInputElement;
-  const rootThree = document.getElementById("root-3") as HTMLInputElement;
   const message = document.getElementById("message") as HTMLParagraphElement;
 
   const roots: number[] = []; // fit the roots into an array 
 
   if (a === 0) {
     message.textContent = "*NOT a Cubic Function*";
-    rootOne.value = "";
-    rootTwo.value = "";
-    rootThree.value = "";
-    (document.getElementById("p-value") as HTMLInputElement).value = "";
-    (document.getElementById("q-value") as HTMLInputElement).value = "";
-    (document.getElementById("discriminant") as HTMLInputElement).value = "";
 
   } else {
+    const p: number = (3 * a * c - b * b) / (3 * a * a); // depressed cubic, refer to mr q 
+    const q: number = (27 * a * a * d - 9 * a * b * c + 2 * b * b * b) / (27 * a * a * a);
+    const discriminant: number = (q / 2) * (q / 2) + (p / 3) * (p / 3) * (p / 3); // Math.pow(q / 2, 2) + Math.pow(p / 3, 3); breaks in certain cases (1,-1,0,0) 
+
+    const h: number = -b / (3 * a); // to equate y and x, adjuster 
+
+    const u: number = Math.cbrt(-q / 2 + (Math.sqrt(discriminant)));
+    const v: number = Math.cbrt(-q / 2 - (Math.sqrt(discriminant))); // for cardano's method 
+
+    const rootOne = document.getElementById("root-1") as HTMLInputElement;
+    const rootTwo = document.getElementById("root-2") as HTMLInputElement;
+    const rootThree = document.getElementById("root-3") as HTMLInputElement;
+
     message.textContent = "";
-    (document.getElementById("p-value") as HTMLInputElement).value = p.toFixed(4);
-    (document.getElementById("q-value") as HTMLInputElement).value = q.toFixed(4);
-    (document.getElementById("discriminant") as HTMLInputElement).value = discriminant.toFixed(4);
+    (document.getElementById("p-value") as HTMLInputElement).value = p.toFixed(5);
+    (document.getElementById("q-value") as HTMLInputElement).value = q.toFixed(5);
+    (document.getElementById("discriminant") as HTMLInputElement).value = discriminant.toFixed(5);
 
     if (discriminant < 0) {
-      const theta = Math.acos(((-q / (2 * Math.sqrt((-p / 3) ** 3))))) / 3;
+      const theta: number = Math.acos(((-q / (2 * Math.sqrt((-p / 3) ** 3))))) / 3;
       const k = 2 * Math.sqrt(-p / 3);
 
       const root1 = k * Math.cos(theta) + h;
       const root2 = k * Math.cos(theta + 2 * Math.PI / 3) + h;
       const root3 = k * Math.cos(theta + 4 * Math.PI / 3) + h;
 
-      rootOne.value = root1.toFixed(4);
-      rootTwo.value = root2.toFixed(4);
-      rootThree.value = root3.toFixed(4);
+      rootOne.value = root1.toFixed(2);
+      rootTwo.value = root2.toFixed(2);
+      rootThree.value = root3.toFixed(2);
 
       roots.push(root1, root2, root3);
 
@@ -145,7 +144,7 @@ form?.addEventListener("submit", (event) => {
 
       const root1 = u + v + h;
 
-      rootOne.value = root1.toFixed(4);
+      rootOne.value = root1.toFixed(2);
       rootTwo.value = "Complex Root";
       rootThree.value = "Complex Root";
 
@@ -155,9 +154,9 @@ form?.addEventListener("submit", (event) => {
 
       const root1 = h;
 
-      rootOne.value = root1.toFixed(4);
-      rootTwo.value = root1.toFixed(4);
-      rootThree.value = root1.toFixed(4);
+      rootOne.value = root1.toFixed(2);
+      rootTwo.value = root1.toFixed(2);
+      rootThree.value = root1.toFixed(2);
 
       roots.push(root1);
 
@@ -169,9 +168,9 @@ form?.addEventListener("submit", (event) => {
       const root1 = r + h; // double root 
       const root2 = -2 * r + h;
 
-      rootOne.value = root1.toFixed(4);
-      rootTwo.value = root1.toFixed(4);
-      rootThree.value = root2.toFixed(4);
+      rootOne.value = root1.toFixed(2);
+      rootTwo.value = root1.toFixed(2);
+      rootThree.value = root2.toFixed(2);
 
       roots.push(root1, root1, root2);
     }

@@ -56,8 +56,11 @@ function graph(a: number, b: number, c: number, d: number, roots: number[] = [])
       const y: number = a * x ** 3 + b * x ** 2 + c * x + d;
       const py: number = centerY - y * scale;
 
-      if (px === 0) ctx.moveTo(px, py);
-      else ctx.lineTo(px, py);
+      if (px === 0) { 
+        ctx.moveTo(px, py); 
+      } else {
+        ctx.lineTo(px, py);
+      }
     }
 
     ctx.stroke();
@@ -69,7 +72,7 @@ function graph(a: number, b: number, c: number, d: number, roots: number[] = [])
     const px: number = centerX + root * scale;
     const py: number = centerY;
     ctx.beginPath();
-    ctx.arc(px, py, 5, 0, 2 * Math.PI);
+    ctx.arc(px, py, 4, 0, 2 * Math.PI);
     ctx.fill();
   });
   // zeroes
@@ -140,11 +143,8 @@ form?.addEventListener("submit", (event) => {
       rootThree.value = `(${root3.toFixed(2)}, 0)`;
 
       roots.push(root1, root2, root3);
-
       // trig method 
-
     } else if (discriminant > 0) {
-
       const root1: number = u + v + h;
 
       rootOne.value = `(${root1.toFixed(2)}, 0)`;
@@ -152,9 +152,7 @@ form?.addEventListener("submit", (event) => {
       rootThree.value = "Complex Root";
 
       roots.push(root1);
-
     } else if (discriminant === 0 && p === 0 && q === 0) {
-
       const root1: number = h;
 
       rootOne.value = `(${root1.toFixed(2)}, 0)`;
@@ -162,9 +160,7 @@ form?.addEventListener("submit", (event) => {
       rootThree.value = `(${root1.toFixed(2)}, 0)`;
 
       roots.push(root1);
-
       // cardano's method 
-
     } else {
       const r: number = Math.cbrt(q / 2);
 
